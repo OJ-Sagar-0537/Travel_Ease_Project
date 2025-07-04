@@ -1,4 +1,4 @@
-name: wf-cd-release
+name: wf-cd-deploy
 on: 
   push:
     branches: 
@@ -17,13 +17,13 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-          name: "Build-artifact-release"
+          name: "Build-artifact-${{ github.ref_name }}"
   deploy-job:
     name: Deploy to GitHub Pages
     needs: Build-job
     runs-on: ubuntu-latest
     environment:
-      name: "release-env"
+      name: "${{ github.ref_name }}-env"
     permissions:
       pages: write
       id-token: write
@@ -31,5 +31,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: "Build-artifact-release"
+          artifact_name: "Build-artifact-${{ github.ref_name }}"
           token: "${{github.token}}"
