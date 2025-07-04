@@ -2,7 +2,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: black;
   margin: 0;
   padding: 0;
 }
@@ -11,21 +11,21 @@ main {
   max-width: 960px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: blue;
 }
 
 h1 {
   text-align: center;
-  color: #333333;
+  color: gray;
   margin-bottom: 40px;
 }
 
 .story {
   margin-bottom: 40px;
-  border: 1px solid #dddddd;
+  border: 1px solid beige;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #fafafa;
+  background-color: beige;
   padding: 20px;
 }
 
@@ -48,7 +48,7 @@ h1 {
 .read-more {
   display: inline-block;
   margin-top: 10px;
-  color: #0066cc;
+  color: blue;
   text-decoration: none;
 }
 
