@@ -1,4 +1,159 @@
+/* Basic reset */
+* {
+  margin: 0;
+    padding: 0;
+      box-sizing: border-box;
+      }
 
-back {
-    margin: 0;
-    }
+      body {
+        font-family: sans-serif;
+          background: #fff;
+            color: #333;
+              line-height: 1.6;
+              }
+
+              .container {
+                width: 90%;
+                  max-width: 1000px;
+                    margin: 0 auto;
+                      padding: 20px;
+                      }
+
+                      /* Header */
+                      .header {
+                        background: #2c3e50;
+                          color: white;
+                            padding: 20px 0;
+                            }
+
+                            .navbar {
+                              display: flex;
+                                justify-content: space-between;
+                                  align-items: center;
+                                  }
+
+                                  .logo h1 {
+                                    font-size: 24px;
+                                      color: #e74c3c;
+                                      }
+
+                                      .tagline {
+                                        font-size: 14px;
+                                          color: #bdc3c7;
+                                          }
+
+                                          .nav-menu {
+                                            list-style: none;
+                                              display: flex;
+                                              }
+
+                                              .nav-menu li {
+                                                margin-left: 20px;
+                                                }
+
+                                                .nav-menu a {
+                                                  color: white;
+                                                    text-decoration: none;
+                                                    }
+
+                                                    .nav-menu a.active {
+                                                      font-weight: bold;
+                                                      }
+
+                                                      /* Hero Section */
+                                                      .hero-section {
+                                                        background: #3498db;
+                                                          color: white;
+                                                            text-align: center;
+                                                              padding: 50px 20px;
+                                                              }
+
+                                                              .hero-title {
+                                                                font-size: 32px;
+                                                                  margin-bottom: 10px;
+                                                                  }
+
+                                                                  .hero-subtitle {
+                                                                    font-size: 18px;
+                                                                    }
+
+                                                                    /* Sections */
+                                                                    section {
+                                                                      margin: 40px 0;
+                                                                      }
+
+                                                                      .section-title {
+                                                                        font-size: 24px;
+                                                                          margin-bottom: 20px;
+                                                                            text-align: center;
+                                                                            }
+
+                                                                            /* Mission and Vision Content */
+                                                                            .text-content,
+                                                                            .vision-content {
+                                                                              margin-bottom: 20px;
+                                                                              }
+
+                                                                              .image-content img {
+                                                                                width: 100%;
+                                                                                  height: auto;
+                                                                                  }
+
+                                                                                  /* Founders */
+                                                                                  .founders-grid {
+                                                                                    display: flex;
+                                                                                      flex-direction: column;
+                                                                                        gap: 20px;
+                                                                                        }
+
+                                                                                        .founder-card {
+                                                                                          display: flex;
+                                                                                            gap: 20px;
+                                                                                              background: #f0f0f0;
+                                                                                                padding: 20px;
+                                                                                                }
+
+                                                                                                .founder-image img {
+                                                                                                  width: 100px;
+                                                                                                    height: 100px;
+                                                                                                      border-radius: 50%;
+                                                                                                      }
+
+                                                                                                      .founder-title {
+                                                                                                        color: #e74c3c;
+                                                                                                          font-weight: bold;
+                                                                                                          }
+
+                                                                                                          /* Partners and Values */
+                                                                                                          .partners-grid,
+                                                                                                          .values-grid,
+                                                                                                          .vision-points {
+                                                                                                            display: flex;
+                                                                                                              flex-direction: column;
+                                                                                                                gap: 15px;
+                                                                                                                }
+
+                                                                                                                .partner-item,
+                                                                                                                .value-item,
+                                                                                                                .vision-point {
+                                                                                                                  background: #f8f8f8;
+                                                                                                                    padding: 15px;
+                                                                                                                    }
+
+                                                                                                                    /* Footer */
+                                                                                                                    .footer {
+                                                                                                                      background: #2c3e50;
+                                                                                                                        color: white;
+                                                                                                                          padding: 30px 20px;
+                                                                                                                            text-align: center;
+                                                                                                                            }
+
+                                                                                                                            .footer-section h3,
+                                                                                                                            .footer-section h4 {
+                                                                                                                              color: #e74c3c;
+                                                                                                                              }
+
+                                                                                                                              .footer-section a {
+                                                                                                                                color: #ccc;
+                                                                                                                                  text-decoration: none;
+                                                                                                                                  }
