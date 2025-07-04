@@ -1,0 +1,13 @@
+{
+  "name": "travelease",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "parcel build src/*.html --dist-dir dist"
+  },
+  "devDependencies": {
+    "parcel": "^2.9.3",
+    "htmlhint": "^1.1.4",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0"
+  }
+}
