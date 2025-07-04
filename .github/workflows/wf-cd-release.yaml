@@ -2,6 +2,7 @@ name: wf-cd-release
 on: 
   push:
     branches: 
+      - develop
       - release
 jobs:
   Build-job:
