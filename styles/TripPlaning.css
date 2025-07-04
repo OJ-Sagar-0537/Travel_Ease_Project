@@ -11,17 +11,17 @@ main {
   max-width: 960px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 h1 {
   text-align: center;
-  color: #333333;
+  color: #333;
   margin-bottom: 30px;
 }
 
 h2 {
-  color: #0077cc;
+  color: #07c;
   margin-top: 20px;
 }
 
@@ -36,7 +36,7 @@ li {
 }
 
 a {
-  color: #0055aa;
+  color: #05a;
   text-decoration: none;
 }
 
@@ -46,7 +46,7 @@ a:hover {
 
 .faq .question {
   background-color: #eef4f8;
-  border-left: 4px solid #0077cc;
+  border-left: 4px solid #07c;
   padding: 10px 15px;
   margin-bottom: 15px;
 }
