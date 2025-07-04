@@ -1,0 +1,50 @@
+/* Destinations Page CSS */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.region {
+  margin-bottom: 40px;
+}
+
+.region h2 {
+  color: #07c;
+  border-bottom: 2px solid #07c;
+  padding-bottom: 5px;
+}
+
+.destination {
+  background-color: #fefefe;
+  border-left: 4px solid #05a;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 4px;
+}
+
+.destination h3 {
+  margin: 0 0 10px;
+  color: #07c;
+}
+
+.destination p {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
