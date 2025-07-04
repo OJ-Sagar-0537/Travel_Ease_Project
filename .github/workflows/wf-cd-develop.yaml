@@ -5,7 +5,7 @@ on:
       - develop
 jobs:
   Build-job:
-    name: Build website using Parcel
+    name: Build website
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code to Runner
