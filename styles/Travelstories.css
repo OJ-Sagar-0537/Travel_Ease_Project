@@ -1,0 +1,57 @@
+/* Travel Stories CSS */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: whitesmoke;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: lightblue;
+}
+
+h1 {
+  text-align: center;
+  color: gray;
+  margin-bottom: 40px;
+}
+
+.story {
+  margin-bottom: 40px;
+  border: 1px solid beige;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: beige;
+  padding: 20px;
+}
+
+.story img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.story h2 {
+  color: lightblue;
+  margin-top: 10px;
+}
+
+.story p {
+  color: gray;
+  line-height: 1.6;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 10px;
+  color: blue;
+  text-decoration: none;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
