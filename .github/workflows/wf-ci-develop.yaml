@@ -1,4 +1,5 @@
 name: wf-ci-develop
+
 on:
   pull_request:
     branches:
@@ -6,22 +7,38 @@ on:
     types:
       - opened
       - synchronize
+      - reopened
+
 jobs:
   linting-develop-job:
+    name: Lint HTML and CSS (src only)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Remove dist folder
-        run: rm -rf dist/ || true
-      - name: Lint HTML Files With HTMLHint (Source Only)
+
+      - name: Install Linting Tools
+        run: |
+          npm install -g stylelint stylelint-config-standard htmlhint
+
+      - name: Lint HTML Files (only src/)
         run: npx htmlhint "src/**/*.html" --config .htmlhintrc || echo "No HTML files found"
-      - name: Lint CSS Files With Stylelint
+
+      - name: Lint CSS Files (only src/)
         run: npx stylelint "src/**/*.css" --allow-empty-input || echo "No CSS files found"
+
   build-develop-job:
+    name: Build website without minification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Test Building With Parcel
-        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+
+      - name: Build website with Parcel (no optimize)
+        run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./" --no-optimize
+
+      - name: Upload build Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+          name: "Build-artifact-develop"
