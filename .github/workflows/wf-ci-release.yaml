@@ -26,7 +26,7 @@ jobs:
         run: npx stylelint "styles/**/*.css"
 
       - name: Build project with Parcel
-        run: npx parcel build "./src/*.[hH][tT][mM][lL]" --dist-dir "./dist" --public-url "./dist"
+        run: npx parcel build "./src/*.[hH][tT][mM][lL]" --dist-dir "./dist" --public-url ./
 
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v4
