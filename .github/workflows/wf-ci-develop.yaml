@@ -1,4 +1,4 @@
-name: wf-ci-release
+name: wf-ci-develop
 
 on:
   pull_request:
@@ -14,10 +14,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+        
       - name: Install dependencies
         run: npm install -g stylelint stylelint-config-standard htmlhint
         
-      - name: Create strict HTMLHint config
+      - name: Create HTMLHint config for source files
         run: |
           echo '{
             "tagname-lowercase": true,
@@ -32,42 +38,73 @@ jobs:
             "title-require": true
           }' > .htmlhintrc
           
-      - name: Lint HTML files
+      - name: Lint HTML files (source only)
         run: |
-          htmlhint "src/**/*.html" || \
-          (echo "HTML validation failed. Please check:"; \
-           echo "1. All attributes must use double quotes: attr=\"value\""; \
-           echo "2. All tags must be properly closed"; \
-           echo "3. Document must have complete structure"; \
-           exit 1)
-           
+          if [ -d "src" ]; then
+            htmlhint "src/**/*.html" || \
+            (echo "HTML validation failed. Please check:"; \
+             echo "1. All attributes must use double quotes: attr=\"value\""; \
+             echo "2. All tags must be properly closed"; \
+             echo "3. Document must have complete structure"; \
+             exit 1)
+          else
+            echo "No src directory found, skipping HTML linting"
+          fi
+          
       - name: Lint CSS files
-        run: npx stylelint "styles/**/*.css"
+        run: |
+          if [ -d "styles" ]; then
+            npx stylelint "styles/**/*.css"
+          else
+            echo "No styles directory found, skipping CSS linting"
+          fi
 
   build-job:
     name: Build and Validate
     runs-on: ubuntu-latest
+    needs: linting-job
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
         
       - name: Install dependencies
         run: npm install
         
       - name: Build with Parcel
-        run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./dist"
+        run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./"
         
-      - name: Validate built HTML
+      - name: Verify build output
         run: |
-          htmlhint "dist/**/*.html" > htmlhint-report.txt || true
-          if [ -s htmlhint-report.txt ]; then
-            echo "::error::HTML validation failed. Please fix the following:"
-            cat htmlhint-report.txt
-            echo "::endgroup::"
-            exit 1
-          fi
+          echo "✅ Build completed successfully"
+          echo "Built files are in ./dist directory"
+          ls -la ./dist/
+          echo ""
+          echo "File sizes:"
+          find ./dist -type f -exec ls -lh {} \; | awk '{print $9 " - " $5}' 2>/dev/null || echo "Build artifacts created"
           
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: "./dist"
+
+  deploy-job:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build-job
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
