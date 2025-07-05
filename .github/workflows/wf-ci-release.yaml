@@ -5,37 +5,40 @@ on:
     branches:
       - develop
       - release
-    types: [opened, synchronize, reopened]
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   linting-job:
-    name: Lint HTML and CSS files
+    name: Lint HTML and CSS (src only)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code to Runner
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Linting Tools
+      - name: Install linting tools
         run: |
           npm install -g htmlhint stylelint stylelint-config-standard
 
-      - name: Lint HTML files in src/
+      - name: Lint HTML files
         run: npx htmlhint "src/**/*.html" --config .htmlhintrc || echo "No HTML files found"
 
-      - name: Lint CSS files in src/
+      - name: Lint CSS files
         run: npx stylelint "src/**/*.css" --allow-empty-input || echo "No CSS files found"
 
   build-job:
-    name: Build the project by using Parcel (no optimize)
+    name: Build website (no optimize)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code to Runner
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build website with Parcel (no minify)
+      - name: Build with Parcel
         run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./dist" --no-optimize
 
-      - name: Upload build Artifacts to GitHub Pages
+      - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"

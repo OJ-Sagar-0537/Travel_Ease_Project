@@ -1,40 +1,41 @@
-name: wf-cd-release
+name: wf-cd-deploy-release
 
-on: 
+on:
   push:
-    branches: 
+    branches:
       - develop
       - release
 
 jobs:
   build-job:
-    name: Build website
+    name: Build website (no optimize)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code to Runner
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build website with Parcel (no optimize)
+      - name: Build with Parcel
         run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./dist" --no-optimize
 
-      - name: Upload build Artifacts to GitHub Pages
+      - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
           name: "Build-artifact-${{ github.ref_name }}"
 
   deploy-job:
-    name: Deploy to GitHub Pages
+    name: Deploy to GitHub Pages (${{
+      github.ref_name }}-env)
     needs: build-job
     runs-on: ubuntu-latest
     environment:
-      name: "${{ github.ref_name }}-env"
+      name: ${{ github.ref_name }}-env
     permissions:
       pages: write
       id-token: write
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy artifact
         uses: actions/deploy-pages@v4
         with:
           artifact_name: "Build-artifact-${{ github.ref_name }}"
-          token: "${{ github.token }}"
+          token: ${{ github.token }}
