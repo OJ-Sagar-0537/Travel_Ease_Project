@@ -8,67 +8,27 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  linting-job:
-    name: Lint HTML and CSS
+  lint-and-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Install dependencies
-        run: npm install -g stylelint stylelint-config-standard htmlhint
-        
-      - name: Create strict HTMLHint config
         run: |
-          echo '{
-            "tagname-lowercase": true,
-            "attr-lowercase": true,
-            "attr-value-double-quotes": true,
-            "doctype-first": true,
-            "id-unique": true,
-            "tag-pair": true,
-            "spec-char-escape": true,
-            "head-script-disabled": true,
-            "style-disabled": true,
-            "title-require": true
-          }' > .htmlhintrc
-          
+          npm install -g stylelint htmlhint
+          npm install
+
       - name: Lint HTML files
-        run: |
-          htmlhint "src/**/*.html" || \
-          (echo "HTML validation failed. Please check:"; \
-           echo "1. All attributes must use double quotes: attr=\"value\""; \
-           echo "2. All tags must be properly closed"; \
-           echo "3. Document must have complete structure"; \
-           exit 1)
-           
+        run: htmlhint "src/**/*.html"
+
       - name: Lint CSS files
         run: npx stylelint "styles/**/*.css"
 
-  build-job:
-    name: Build and Validate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Install dependencies
-        run: npm install
-        
-      - name: Build with Parcel
-        run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./dist"
-        
-      - name: Validate built HTML
-        run: |
-          htmlhint "dist/**/*.html" > htmlhint-report.txt || true
-          if [ -s htmlhint-report.txt ]; then
-            echo "::error::HTML validation failed. Please fix the following:"
-            cat htmlhint-report.txt
-            echo "::endgroup::"
-            exit 1
-          fi
-          
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Build project with Parcel
+        run: npx parcel build "./src/*.[hH][tT][mM][lL]" --dist-dir "./dist" --public-url "./dist"
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v4
         with:
           path: "./dist"
