@@ -1,4 +1,3 @@
-
 name: wf-ci-develop
 on:
   pull_request:
@@ -14,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Lint HTML Files With HTMLHint
-        run: npx htmlhint "**/*.html"
+        run: npx htmlhint "**/*.html" --ignore "**/dist/**"
       - name: Lint CSS Files With Stylelint
         run: npx stylelint "**/*.css" --allow-empty-input 
   build-develop-job:
@@ -22,7 +21,5 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Test Builing With Parcel
-        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./" 
-      
-  
+      - name: Test Building With Parcel
+        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
