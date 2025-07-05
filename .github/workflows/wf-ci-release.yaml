@@ -3,7 +3,6 @@ name: wf-ci-release
 on:
   pull_request:
     branches:
-      - develop
       - release
     types: [opened, synchronize, reopened]
 
