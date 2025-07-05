@@ -21,6 +21,9 @@ jobs:
         run: |
           npm install -g htmlhint stylelint stylelint-config-standard
 
+      - name: Remove dist folder
+        run: rm -rf dist/ || true
+
       - name: Lint HTML files
         run: npx htmlhint "src/**/*.html" --config .htmlhintrc || echo "No HTML files found"
 
