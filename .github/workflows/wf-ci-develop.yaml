@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Clean dist folder
+        run: rm -rf dist/
       - name: Lint HTML Files With HTMLHint
         run: npx htmlhint "src/**/*.html"
       - name: Lint CSS Files With Stylelint
