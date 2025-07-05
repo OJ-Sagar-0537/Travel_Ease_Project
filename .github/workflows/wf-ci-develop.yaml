@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Lint HTML Files With HTMLHint
-        run: npx htmlhint "**/*.html" --ignore "**/dist/**"
+        run: npx htmlhint "**/*.html" "src/**/*.html" --ignore "**/dist/**"
       - name: Lint CSS Files With Stylelint
         run: npx stylelint "**/*.css" --allow-empty-input 
   build-develop-job:
