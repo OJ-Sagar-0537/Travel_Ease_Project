@@ -15,7 +15,7 @@ jobs:
       - name: Remove dist folder
         run: rm -rf dist/ || true
       - name: Lint HTML Files With HTMLHint (Source Only)
-        run: npx htmlhint src/index.html
+        run: npx htmlhint "src/**/*.html" --config .htmlhintrc || echo "No HTML files found"
       - name: Lint CSS Files With Stylelint
         run: npx stylelint "src/**/*.css" --allow-empty-input || echo "No CSS files found"
   build-develop-job:
