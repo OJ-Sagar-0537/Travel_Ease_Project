@@ -30,7 +30,7 @@ jobs:
       pages: write
       id-token: write
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy to the GitHub Pages
         uses: actions/deploy-pages@v4
         with:
           artifact_name: "Build-artifact-production"
