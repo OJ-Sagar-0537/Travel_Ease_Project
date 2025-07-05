@@ -2,6 +2,7 @@ name: wf-cd-deploy
 on: 
   push:
     branches: 
+      - develop
       - release
 jobs:
   Build-job:
