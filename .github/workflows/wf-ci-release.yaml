@@ -1,10 +1,9 @@
-name: wf-ci-release
+name: wf-ci-develop
 
 on:
   pull_request:
     branches:
       - develop
-      - release
     types:
       - opened
       - synchronize
@@ -21,6 +20,9 @@ jobs:
       - name: Install linting tools
         run: |
           npm install -g htmlhint stylelint stylelint-config-standard
+
+      - name: Remove dist folder
+        run: rm -rf dist/ || true
 
       - name: Lint HTML files
         run: npx htmlhint "src/**/*.html" --config .htmlhintrc || echo "No HTML files found"
@@ -42,4 +44,4 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-          name: "Build-artifact-release"
+          name: "Build-artifact-develop"
