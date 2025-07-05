@@ -9,29 +9,44 @@ on:
 
 jobs:
   linting-job:
-    name: Lint HTML and CSS source files
+    name: Lint HTML and CSS
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         
       - name: Install dependencies
+        run: npm install -g stylelint stylelint-config-standard htmlhint
+        
+      - name: Create strict HTMLHint config
         run: |
-          npm install -g stylelint stylelint-config-standard
-          npm install -g prettier
-          
-      - name: Format HTML files
-        run: |
-          find src -name "*.html" -exec prettier --write --parser html {} \;
+          echo '{
+            "tagname-lowercase": true,
+            "attr-lowercase": true,
+            "attr-value-double-quotes": true,
+            "doctype-first": true,
+            "id-unique": true,
+            "tag-pair": true,
+            "spec-char-escape": true,
+            "head-script-disabled": true,
+            "style-disabled": true,
+            "title-require": true
+          }' > .htmlhintrc
           
       - name: Lint HTML files
-        run: npx htmlhint "src/**/*.html"
-        
+        run: |
+          htmlhint "src/**/*.html" || \
+          (echo "HTML validation failed. Please check:"; \
+           echo "1. All attributes must use double quotes: attr=\"value\""; \
+           echo "2. All tags must be properly closed"; \
+           echo "3. Document must have complete structure"; \
+           exit 1)
+           
       - name: Lint CSS files
         run: npx stylelint "styles/**/*.css"
 
   build-job:
-    name: Build and validate
+    name: Build and Validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -43,15 +58,17 @@ jobs:
       - name: Build with Parcel
         run: npx parcel build "./src/*.html" --dist-dir "./dist" --public-url "./dist"
         
-      - name: Format built HTML
+      - name: Validate built HTML
         run: |
-          find dist -name "*.html" -exec prettier --write --parser html {} \;
+          htmlhint "dist/**/*.html" > htmlhint-report.txt || true
+          if [ -s htmlhint-report.txt ]; then
+            echo "::error::HTML validation failed. Please fix the following:"
+            cat htmlhint-report.txt
+            echo "::endgroup::"
+            exit 1
+          fi
           
-      - name: Validate HTML
-        run: npx htmlhint "dist/**/*.html"
-        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
-          name: "Build-artifact-release"
